@@ -2,6 +2,7 @@ import { SSTConfig } from "sst";
 import { StorageStack } from "./stacks/StorageStack";
 import { FrontendStack } from "./stacks/FrontendStack";
 import {ApiStack} from "./stacks/ApiStack"
+import {AuthStack} from "./stacks/AuthStack"
 
 
 export default {
@@ -14,6 +15,7 @@ export default {
   stacks(app) {
     app.stack(StorageStack)
     .stack(ApiStack)
+    .stack(AuthStack)
     .stack(FrontendStack)
   },
 } satisfies SSTConfig;

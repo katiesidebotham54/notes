@@ -8,6 +8,36 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Amplify } from "aws-amplify";
 import config from "./config";
 
+//setting various AWS resources, just setting things up
+Amplify.configure({
+  //refers to Cognito as Auth
+  Auth: {
+    //want users to be signed in before they can interact with app
+    mandatorySignIn: true,
+    region: config.cognito.REGION,
+    userPoolId: config.cognito.USER_POOL_ID,
+    identityPoolId: config.cognito.IDENTITY_POOL_ID,
+    userPoolWebClientId: config.cognito.APP_CLIENT_ID,
+  },
+  //refers to S3 as Storage
+  Storage: {
+    region: config.s3.REGION,
+    bucket: config.s3.BUCKET,
+    identityPoolId: config.cognito.IDENTITY_POOL_ID,
+  },
+  // refers API Gateway as API
+  API: {
+    endpoints: [
+      {
+        //telling Amplify what we want to name API
+        name: "notes",
+        endpoint: config.apiGateway.URL,
+        region: config.apiGateway.REGION,
+      },
+    ],
+  },
+});
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
